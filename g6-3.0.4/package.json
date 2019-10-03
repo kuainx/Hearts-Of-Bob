@@ -65,7 +65,7 @@
     "jszip": "~3.1.5",
     "nightmare": "~2.10.0",
     "nunjucks": "~3.0.1",
-    "open": "~0.0.5",
+    "open": "~6.4.0",
     "parseurl": "~1.3.2",
     "pre-commit": "~1.2.2",
     "radixsort": "~1.0.0",
