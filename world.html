@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <title>Hears of BOB</title>
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
+  <link href="css/bootstrap.min.css" rel="stylesheet">
+  <link href="css/mdb.min.css" rel="stylesheet">
+  <link href="css/style.min.css" rel="stylesheet">
+  <style>
+  .f-green{
+      color: green;
+  }
+  .f-red{
+      color: red;
+  }
+  .f-orange{
+      color: orange;
+  }
+  .party-group .list-group-item{
+      padding: 0 5px;
+      font-size: small;
+  }
+  .group-active{
+      background: linear-gradient(to right, rgba(236, 172, 12, 0.75), rgba(236, 172, 12, 0.25));
+  }
+  .g6-tooltip {
+    border: 1px solid #e2e2e2;
+    border-radius: 4px;
+    max-width: 200px;
+    font-size: 12px;
+    color: #2f2f2f;
+    background-color: rgba(255, 255, 255, 0.9);
+    padding: 10px 8px;
+    box-shadow: rgb(174, 174, 174) 0px 0px 10px;
+  }
+  </style>
+  <script src="https://gw.alipayobjects.com/os/antv/pkg/_antv.g6-3.0.5-beta.12/build/g6.js"></script>
+  <script src="https://gw.alipayobjects.com/os/lib/dagre/0.8.4/dist/dagre.min.js"></script>
+  <script type="text/javascript" src="js/jquery-3.4.1.min.js"></script>
+  <script type="text/javascript" src="js/popper.min.js"></script>
+  <script type="text/javascript" src="js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="js/mdb.min.js"></script>
+  <script type="text/javascript" charset="utf-8">
+window.assets={
+    "party": [
+        {
+            "name": "理科主义"
+        }, {
+            "name": "文科主义"
+        },{
+            "name": "体育主义"
+        },{
+            "name": "综合主义"
+        }
+    ]
+}
+window.gameData=JSON.parse(window.localStorage.gameData);
+  
+  
+  
+      window.getDescription = {
+          eduPoint:()=>{
+              $("#eduPointContainer").html('点数改变：<b class="f-green">+233.00</b>/回合<br/>基础值<b class="f-orange">2.00</b><br/>稳定度<b class="f-red">-20%</b>');
+          },
+          stability:()=>{
+              $("#stabilityContainer").html('<b class="f-orange">当前稳定度受到以下影响</b><br/>倾向学科支持率：<b class="f-green">+32%</b><br/>素质教育：<b class="f-green">+10%</b><br/><br/><b class="f-orange">当前稳定度影响以下内容</b><br/>学术支持率<b class="f-red">-30%</b><br/>学习速度<b class="f-green">+5%</b>');
+          },
+          studySupport:()=>{
+              $("#studySupportContainer").html('<b class="f-orange">当前支持率受到以下影响</b><br/>全校紧张度：<b class="f-green">+18%</b><br/>班级稳定度：<b class="f-red">-30%</b><br/>拥有学科荣耀：<b class="f-green">+5%</b><br/>激励（胡志敏）：<b class="f-green">+20%</b><br/><br/><b class="f-orange">当前支持率影响以下内容</b><br/>学习速度<b class="f-red">+8%</b>');
+          },
+          studyPoint:()=>{
+              $("#studyPointContainer").html('每回合学力增长:<b class="f-orange">+68</b><br/><br/>全部核心学生（<b class="f-orange">36</b>）学习<b class="f-orange">16</b>/回合<br/>全部非核心学生（<b class="f-orange">0</b>）学习<b class="f-orange">12</b>/回合<br/><br/>学习效率<b class="f-green">+20%</b><br/>学不死就往死里学：<b class="f-green">+25%</b><br/>素质教育：<b class="f-red">-5%</b><br/>稳定度：<b class="f-green">+5%</b><br/>');
+          },
+          schoolTension:()=>{
+              $("#schoolTensionContainer").html('最新的全校紧张度变化<br/><b class="f-orange">高三（4）班</b>：<b class="f-green">+4%</b><br/>切换学习政策：<b class="f-orange">学不死就往死里学</b>');
+          },
+          party:(e)=>{
+              var party=e.currentTarget.dataset.partyid;
+              
+              
+              $("#partyContainer").html('');
+          }
+      };
+      window.eventPop={
+          newsList:[],
+          nextNews:()=>{
+              $('#modalNews').modal('show');
+              let e=eventPop.newsList.shift();
+              if(e!=undefined){
+                  document.getElementById("newsDetail").innerHTML=e.d;
+                  document.getElementById("newsBtn").innerHTML=e.c;
+              }else{
+                  $('#modalNews').modal('hide');
+              }
+          },
+          newsAdd:(detail,comment)=>{
+              eventPop.newsList.push({d:detail,c:comment});
+          },
+          eventList:[],
+          nextEvent:()=>{
+              
+          },
+          eventAdd:(detail,comment)=>{
+              eventPop.eventList.push({d:detail,c:comment});
+          }
+      }
+      $(document).ready(function(){
+        new WOW().init();
+        $('[data-toggle="popover"]').popover({html:true,trigger:'click'});
+        
+        $("#eduPoint").on("mouseover",function(e){
+            window.getDescription.eduPoint();
+        });
+        $("#stability").on("mouseover",function(e){
+            window.getDescription.stability();
+        });
+        $("#studySupport").on("mouseover",function(e){
+            window.getDescription.studySupport();
+        });
+        $("#studyPoint").on("mouseover",function(e){
+            window.getDescription.studyPoint();
+        });
+        $("#schoolTension").on("mouseover",function(e){
+            window.getDescription.schoolTension();
+        });
+        $("#party1,#party2,#party3,#party4").on("mouseover",function(e){
+            window.getDescription.party(e);
+        });
+        
+        var ctxP = document.getElementById("partySupport").getContext('2d');
+        var pieChart = new Chart(ctxP, {
+          type: 'pie',
+          data: {
+            labels: ["理科主义", "文科主义", "体育主义", "综合主义"],
+            datasets: [{
+              data: [32.02, 50.28, 10.2, 6.8],
+              backgroundColor: ["#4285f4", "#ff3547", "#fb3", "#00c851"],
+              hoverBackgroundColor: ["#7FA8EB", "#EF7680", "#F0C775", "#00FA64"]
+            }]
+          },
+          options: {
+            responsive: false,
+            aspectRatio: 1,
+            legend:{
+                display:false
+            },
+            layout: {
+                padding: {
+                    right: 60
+                }
+            },
+            tooltips: {
+                callbacks: {
+                    label: function(tooltipItem, data) {
+                        var label = data.labels[tooltipItem.index] + "(";
+                        label += data.datasets[0].data[tooltipItem.index];
+                        label += "%)"
+                        return label;
+                    }
+                }
+            }
+          }
+        });
+      });
+      
+  </script>
+</head>
+
+<body class="grey lighten-3">
+<div style="position:absolute;z-index:-999;width:100%;height:100%;" id="bg"></div>
+  <header>
+    <nav class="navbar fixed-top navbar-expand-lg navbar-light white scrolling-navbar">
+      <div class="container-fluid">
+        <a class="navbar-brand waves-effect" href="./index.html">
+          <strong class="blue-text">HOB / World</strong>
+        </a>
+      </div>
+    </nav>
+  </header>
+
+<div class="modal fade left" id="sideBar" tabindex="-1" role="dialog" aria-labelledby="sideBar" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-full-height modal-left modal-notify modal-info" role="document" style="width:auto;max-width:620px;">
+    <div class="modal-content">
+      <div class="modal-header" style="padding: 6px;">
+        <p class="heading lead" style="font-size: x-large;">管理</p>
+        <button type="button" class="close" style="padding: 0.3em;margin: 0.1em;" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true" class="white-text">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="container">
+          <div class="row">
+            <div class="col-md-4" style="max-width: 180px;padding-top: 6px;">
+                <div class="card">
+                  <div class="view overlay">
+                    <img src="http://temp.im/150x200" width="150" height="200" />
+                  </div>
+                  <div class="card-body text-center" style="padding: 0;">
+                    <button type="button" class="btn btn-outline-primary waves-effect card-title" style="padding: 1px 10px;margin: 5px 0;width: 90%;font-size: medium;letter-spacing: 0.1em;">YET</button>
+                  </div>
+                </div>
+            </div>
+            <div class="col-md-8">
+              <div class="row">
+                <div class="btn-group" role="group" style="width:100%;max-height:106px;">
+                  <button type="button" class="btn btn-lg btn-outline-primary waves-effect" style="padding: 0;max-width:94px;"><img src="http://temp.im/90x90" alt="" width="90" height="90" /></button>
+                  <button type="button" class="btn btn-lg btn-primary" style="font-size: large;letter-spacing: 0.2em;" data-toggle="modal" data-target="#modalFocus">整风运动</button>
+                </div>
+              </div>
+              <div class="row">
+                <div class="card" style="width: 100%;">
+                  <div class="card-body" style="padding: 4px;margin: 2px;width: 100%;">
+                      <div class="badge badge-primary text-wrap card-title" style="margin: 6px;letter-spacing: 0.25em;font-size: medium;">班级精神</div>
+                    <div class="card-text">
+                        <button type="button" class="btn btn-lg btn-outline-primary waves-effect" style="padding: 0;"><img src="http://temp.im/60x60" alt="" width="60" height="60" /></button>
+                        <button type="button" class="btn btn-lg btn-outline-primary waves-effect" style="padding: 0;"><img src="http://temp.im/60x60" alt="" width="60" height="60" /></button>
+                        <button type="button" class="btn btn-lg btn-outline-primary waves-effect" style="padding: 0;"><img src="http://temp.im/60x60" alt="" width="60" height="60" /></button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6" style="padding: 0 8px;">
+                <div class="btn-group" role="group" style="max-height:86px;width: 100%;">
+                  <button type="button" class="btn btn-lg btn-outline-primary waves-effect" style="padding: 0;max-width:74px;"><img src="http://temp.im/70x70" alt="" width="70" height="70" /></button>
+                  <button type="button" class="btn btn-lg btn-primary" style="letter-spacing: 0.2em;">文科主义<br/>无选举</button>
+                </div>
+            </div>
+            <div class="col-md-2" style="padding:0;z-index: 100;">
+                <canvas id="partySupport" style="height:86px;width:146px;"></canvas>
+            </div>
+            <div class="col-md-4" style="padding:0">
+                <div class="list-group party-group">
+                  <a class="list-group-item list-group-item-action" role="button" data-toggle="popover" data-partyid="0" data-placement="top" title="理科主义支持率变化" data-content="<div id='partyContainer'></div>">理科主义&emsp;<span class="badge badge-primary badge-pill">50</span></a>
+                  <a class="list-group-item list-group-item-action group-active" role="button" data-toggle="popover" data-partyid="1" data-placement="top" title="文科主义支持率变化" data-content="<div id='partyContainer'></div>">文科主义&emsp;<span class="badge badge-danger badge-pill">32</span></a>
+                  <a class="list-group-item list-group-item-action" role="button" data-toggle="popover" data-partyid="2" data-placement="top" title="体育主义支持率变化" data-content="<div id='partyContainer'></div>">体育主义&emsp;<span class="badge badge-warning badge-pill">10</span></a>
+                  <a class="list-group-item list-group-item-action" role="button" data-toggle="popover" data-partyid="3" data-placement="top" title="综合主义支持率变化" data-content="<div id='partyContainer'></div>">综合主义&emsp;<span class="badge badge-success badge-pill">7</span></a>
+                </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="modalNews" tabindex="-1" role="dialog" aria-labelledby="modalNews" aria-hidden="true" data-backdrop="false">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header light-blue darken-3 white-text">
+        <h4 class="title"><i class="fas fa-book-reader"></i>&emsp;FZ NEWS</h4>
+      </div>
+      <div class="modal-body mb-0" id="newsDetail"></div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary btn-block" id="newsBtn" onclick="eventPop.nextNews()"></button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="modalFocus" tabindex="-1" role="dialog" aria-labelledby="modalFocus" aria-hidden="true" data-backdrop="false">
+  <div class="modal-dialog modal-xl" role="document" style="max-width: 100%;margin: 0;">
+    <div class="modal-content" style="height:100%">
+      <div class="modal-header">
+        <h4 class="modal-title w-100" id="modalFocus">策略</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body" style="padding: 0;">
+        <div id="focusContainer"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+  <main class="pt-5 mx-lg-5">
+    <div class="container-fluid mt-5">
+
+      <!-- Heading -->
+      <div class="card mb-4 wow fadeIn">
+        <div class="card-body d-sm-flex">
+            <div class="btn-group" role="group">
+              <a tabindex="0" class="btn btn-primary px-3" role="button" data-toggle="popover" data-placement="bottom" title="教育点数" data-content="这个班级领袖拥有多少教育点数。"><i class="fas fa-atlas"></i></a>
+              <a tabindex="0" class="btn btn-outline-primary waves-effect" role="button" data-toggle="popover" id="eduPoint" data-placement="bottom" title="教育点数变化" data-content="<div id='eduPointContainer'></div>">866</a>
+            </div>
+            <div class="btn-group" role="group">
+              <a tabindex="0" class="btn btn-primary px-3" role="button" data-toggle="popover" data-placement="bottom" title="班级稳定度" data-content="班级稳定度表现学生对班级的支持率。高稳定性将使政策改变更容易执行，并有助于班级稳定发展。"><i class="fas fa-balance-scale"></i></a>
+              <a tabindex="0" class="btn btn-outline-primary waves-effect" role="button" data-toggle="popover" id="stability" data-placement="bottom" title="班级稳定度变化" data-content="<div id='stabilityContainer'></div>">23%</a>
+            </div>
+            <div class="btn-group" role="group">
+              <a tabindex="0" class="btn btn-primary px-3" role="button" data-toggle="popover" data-placement="bottom" title="学术支持率" data-content="学术支持率表现学生学习的意愿，制定各项法令或是需要快速让你的班级进入学习状态需要较高的学术支持度。低学术支持度将使违纪行为发生和被发现的概率增加。"><i class="fab fa-asymmetrik"></i></a>
+              <a tabindex="0" class="btn btn-outline-primary waves-effect" role="button" data-toggle="popover" id="studySupport" data-placement="bottom" title="学术支持率变化" data-content="<div id='studySupportContainer'></div>">46%</a>
+            </div>
+            <div class="btn-group" role="group">
+              <a tabindex="0" class="btn btn-primary px-3" role="button" data-toggle="popover" data-placement="bottom" title="学力" data-content="这个班级可以使用的学力，可以通过制定更严格的学习政策来增加。"><i class="fas fa-user-clock"></i></a>
+              <a tabindex="0" class="btn btn-outline-primary waves-effect" role="button" data-toggle="popover" id="studyPoint" data-placement="bottom" title="学力变化" data-content="<div id='studyPointContainer'></div>">388</a>
+            </div>
+            <div class="btn-group" role="group">
+              <a tabindex="0" class="btn btn-danger px-3" role="button" data-toggle="popover" data-placement="bottom" title="全校紧张度" data-content="全校师生的紧张指数，会影响学术支持度，是某些决议和学术斗争执行的条件之一，也会影响学生的学习状态。"><i class="fas fa-exclamation-circle"></i></a>
+              <a tabindex="0" class="btn btn-outline-danger waves-effect" role="button" data-toggle="popover" id="schoolTension" data-placement="bottom" title="全校紧张度变化" data-content="<div id='schoolTensionContainer'></div>">6%</a>
+            </div>
+            
+            
+        </div>
+        <div class="card-body d-sm-flex">
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#sideBar" data-backdrop="false">信息</button>
+            <button type="button" class="btn btn-primary">决议</button>
+            <button type="button" class="btn btn-primary">将领</button>
+        </div>
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalNews">Launch  modal</button>
+      </div>
+    </div>
+  </main>
+  <!--Main layout-->
+
+  <!--Footer-->
+  <footer class="page-footer text-center font-small primary-color-dark darken-2 mt-4 wow fadeIn">
+    <!--Copyright-->
+    <div class="footer-copyright py-3">
+      © 2019 Copyright:
+      <a href="https://ekuai.tech/" target="_blank"> ekuai.tech </a>
+    </div>
+    <!--/.Copyright-->
+
+  </footer>
+  <!--/.Footer-->
+<script type="text/javascript" src="focus.js"></script>
+</body>
+
+</html>
