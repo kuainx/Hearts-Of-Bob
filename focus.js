@@ -82,10 +82,10 @@ var _extends = Object.assign || function(target) {
                     ret+='获得<b class="f-green">'+e.amount+'</b>个文印室';
                     break;
                 case 'spiritAdd':
-                    ret+='获得班级精神：<b class="f-orange">'+e.name+'</b>，其效果为：'+getSpiritEffect(e.effect,"，");
+                    ret+='获得班级精神：<b class="f-orange">'+e.name+'</b>，其效果为（'+getSpiritEffect(e.effect,"，")+'）';
                     break;
                 case 'spiritRep':
-                    ret+='以班级精神<b class="f-orange">'+e.name+'</b>取代<b class="f-orange">'+e.nameDel+'</b>，其效果为：'+getSpiritEffect(e.effect,"，");
+                    ret+='以班级精神<b class="f-orange">'+e.name+'</b>取代<b class="f-orange">'+e.nameDel+'</b>，其效果为（'+getSpiritEffect(e.effect,"，")+'）';
                     break;
                 case 'spiritDel':
                     ret+='移除班级精神：<b class="f-orange">'+e.name+'</b>';
@@ -368,4 +368,33 @@ var _extends = Object.assign || function(target) {
       graph.update(e.item,{style: {
           fill: fillColor[focusStat[e.item._cfg.id]?focusStat[e.item._cfg.id]:0][0]
       }});
+  });
+  graph.on('node:click', e => {
+      var node=e.item._cfg.model;
+      updateStatus();
+      var req="";
+      if(focusStat[node.id]==2){
+          req+='<b class="f-green">已完成</b><br/>';
+      }else if(focusStat[node.id]==1){
+          req+='完成需要<b class="f-orange">'+node.turn+'</b>回合（剩余<b class="f-green">'+node.turn+'</b>回合）<br/>';
+          if(node.require.length>0){
+              node.require.forEach(function(e1){
+                  req+='需要<b class="f-green">'+data.nodes[e1].label+'</b><br/>';
+              });
+          }
+      }else{
+          req+='前提条件不满足<br/>完成需要<b class="f-orange">'+node.turn+'</b>回合<br/>';
+          if(node.require.length>0){
+              node.require.forEach(function(e1){
+                  req+='需要<b class="f-red">'+data.nodes[e1].label+'</b><br/>';
+              });
+          }
+      }
+      document.getElementById("modalFocusDetailRequire").innerHTML=req;
+      document.getElementById("modalFocusDetailHead").innerHTML=node.label;
+      document.getElementById("modalFocusDetailTurn").innerHTML=node.turn+"回合";
+      document.getElementById("modalFocusDetailDescription").innerHTML=node.description;
+      document.getElementById("modalFocusDetailEffect").innerHTML=getPolicyEffects(node.effect);
+      document.getElementById("modalFocusDetailBtn").onclick=function(){};
+      $("#modalFocusDetail").modal("show")
   });

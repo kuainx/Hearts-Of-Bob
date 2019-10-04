@@ -58,9 +58,6 @@ window.assets={
     ]
 }
 window.gameData=JSON.parse(window.localStorage.gameData);
-  
-  
-  
       window.getDescription = {
           eduPoint:()=>{
               $("#eduPointContainer").html('点数改变：<b class="f-green">+233.00</b>/回合<br/>基础值<b class="f-orange">2.00</b><br/>稳定度<b class="f-red">-20%</b>');
@@ -280,6 +277,41 @@ window.gameData=JSON.parse(window.localStorage.gameData);
   </div>
 </div>
 
+<div class="modal fade right" id="modalFocusDetail" tabindex="-1" role="dialog" aria-labelledby="modalFocusDetail" aria-hidden="true" data-backdrop="false">
+  <div class="modal-dialog modal-side modal-bottom-right modal-notify modal-info" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <p class="heading" id="modalFocusDetailHead" style="padding: 0;">调整学习</p>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true" class="white-text">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-3">
+            <p></p>
+            <p class="text-center"><img src="http://temp.im/90x90" alt="" width="90" height="90" /></p>
+          </div>
+          <div class="col-9">
+            <div class="btn-group" role="group" style="width: 100%;">
+              <button type="button" class="btn btn-outline-primary waves-effect" id="modalFocusDetailTurn">1回合</button>
+              <button type="button" class="btn btn-primary" style="width: 10%;" id="modalFocusDetailBtn">开始</button>
+            </div>
+            <div class="card card-body" style="padding: 5px;font-size: small;">
+              <p class="card-text" id="modalFocusDetailRequire">前提条件不满足<br/>需要<b class="f-red">建立班级</b></p>
+            </div>
+          </div>
+        </div>
+        <div class="card card-body" style="padding: 5px;font-size: small;">
+          <div class="card-text"><p id="modalFocusDetailDescription">随着学校局势紧张的加剧，我们当前的学习倾向显然无法保护班级的利益。现在是时候彻底抛弃之前的学习倾向了。</p>
+          <div class="badge badge-primary text-wrap card-title" style="width: 100%;letter-spacing: 1em;font-size: medium;">效果</div>
+          <div id="modalFocusDetailEffect">这个策略目前没有实际影响，但随着学校局势的变化可能会发生改变</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 
 
   <main class="pt-5 mx-lg-5">
@@ -316,7 +348,6 @@ window.gameData=JSON.parse(window.localStorage.gameData);
             <button type="button" class="btn btn-primary">决议</button>
             <button type="button" class="btn btn-primary">将领</button>
         </div>
-        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalNews">Launch  modal</button>
       </div>
     </div>
   </main>
