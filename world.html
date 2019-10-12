@@ -37,133 +37,7 @@
     box-shadow: rgb(174, 174, 174) 0px 0px 10px;
   }
   </style>
-  <script src="https://gw.alipayobjects.com/os/antv/pkg/_antv.g6-3.0.5-beta.12/build/g6.js"></script>
-  <script src="https://gw.alipayobjects.com/os/lib/dagre/0.8.4/dist/dagre.min.js"></script>
-  <script type="text/javascript" src="js/jquery-3.4.1.min.js"></script>
-  <script type="text/javascript" src="js/popper.min.js"></script>
-  <script type="text/javascript" src="js/bootstrap.min.js"></script>
-  <script type="text/javascript" src="js/mdb.min.js"></script>
-  <script type="text/javascript" charset="utf-8">
-window.assets={
-    "party": [
-        {
-            "name": "理科主义"
-        }, {
-            "name": "文科主义"
-        },{
-            "name": "体育主义"
-        },{
-            "name": "综合主义"
-        }
-    ]
-}
-window.gameData=JSON.parse(window.localStorage.gameData);
-      window.getDescription = {
-          eduPoint:()=>{
-              $("#eduPointContainer").html('点数改变：<b class="f-green">+233.00</b>/回合<br/>基础值<b class="f-orange">2.00</b><br/>稳定度<b class="f-red">-20%</b>');
-          },
-          stability:()=>{
-              $("#stabilityContainer").html('<b class="f-orange">当前稳定度受到以下影响</b><br/>倾向学科支持率：<b class="f-green">+32%</b><br/>素质教育：<b class="f-green">+10%</b><br/><br/><b class="f-orange">当前稳定度影响以下内容</b><br/>学术支持率<b class="f-red">-30%</b><br/>学习速度<b class="f-green">+5%</b>');
-          },
-          studySupport:()=>{
-              $("#studySupportContainer").html('<b class="f-orange">当前支持率受到以下影响</b><br/>全校紧张度：<b class="f-green">+18%</b><br/>班级稳定度：<b class="f-red">-30%</b><br/>拥有学科荣耀：<b class="f-green">+5%</b><br/>激励（胡志敏）：<b class="f-green">+20%</b><br/><br/><b class="f-orange">当前支持率影响以下内容</b><br/>学习速度<b class="f-red">+8%</b>');
-          },
-          studyPoint:()=>{
-              $("#studyPointContainer").html('每回合学力增长:<b class="f-orange">+68</b><br/><br/>全部核心学生（<b class="f-orange">36</b>）学习<b class="f-orange">16</b>/回合<br/>全部非核心学生（<b class="f-orange">0</b>）学习<b class="f-orange">12</b>/回合<br/><br/>学习效率<b class="f-green">+20%</b><br/>学不死就往死里学：<b class="f-green">+25%</b><br/>素质教育：<b class="f-red">-5%</b><br/>稳定度：<b class="f-green">+5%</b><br/>');
-          },
-          schoolTension:()=>{
-              $("#schoolTensionContainer").html('最新的全校紧张度变化<br/><b class="f-orange">高三（4）班</b>：<b class="f-green">+4%</b><br/>切换学习政策：<b class="f-orange">学不死就往死里学</b>');
-          },
-          party:(e)=>{
-              var party=e.currentTarget.dataset.partyid;
-              
-              
-              $("#partyContainer").html('');
-          }
-      };
-      window.eventPop={
-          newsList:[],
-          nextNews:()=>{
-              $('#modalNews').modal('show');
-              let e=eventPop.newsList.shift();
-              if(e!=undefined){
-                  document.getElementById("newsDetail").innerHTML=e.d;
-                  document.getElementById("newsBtn").innerHTML=e.c;
-              }else{
-                  $('#modalNews').modal('hide');
-              }
-          },
-          newsAdd:(detail,comment)=>{
-              eventPop.newsList.push({d:detail,c:comment});
-          },
-          eventList:[],
-          nextEvent:()=>{
-              
-          },
-          eventAdd:(detail,comment)=>{
-              eventPop.eventList.push({d:detail,c:comment});
-          }
-      }
-      $(document).ready(function(){
-        new WOW().init();
-        $('[data-toggle="popover"]').popover({html:true,trigger:'click'});
-        
-        $("#eduPoint").on("mouseover",function(e){
-            window.getDescription.eduPoint();
-        });
-        $("#stability").on("mouseover",function(e){
-            window.getDescription.stability();
-        });
-        $("#studySupport").on("mouseover",function(e){
-            window.getDescription.studySupport();
-        });
-        $("#studyPoint").on("mouseover",function(e){
-            window.getDescription.studyPoint();
-        });
-        $("#schoolTension").on("mouseover",function(e){
-            window.getDescription.schoolTension();
-        });
-        $("#party1,#party2,#party3,#party4").on("mouseover",function(e){
-            window.getDescription.party(e);
-        });
-        
-        var ctxP = document.getElementById("partySupport").getContext('2d');
-        var pieChart = new Chart(ctxP, {
-          type: 'pie',
-          data: {
-            labels: ["理科主义", "文科主义", "体育主义", "综合主义"],
-            datasets: [{
-              data: [32.02, 50.28, 10.2, 6.8],
-              backgroundColor: ["#4285f4", "#ff3547", "#fb3", "#00c851"],
-              hoverBackgroundColor: ["#7FA8EB", "#EF7680", "#F0C775", "#00FA64"]
-            }]
-          },
-          options: {
-            responsive: false,
-            aspectRatio: 1,
-            legend:{
-                display:false
-            },
-            layout: {
-                padding: {
-                    right: 60
-                }
-            },
-            tooltips: {
-                callbacks: {
-                    label: function(tooltipItem, data) {
-                        var label = data.labels[tooltipItem.index] + "(";
-                        label += data.datasets[0].data[tooltipItem.index];
-                        label += "%)"
-                        return label;
-                    }
-                }
-            }
-          }
-        });
-      });
-      
-  </script>
+  
 </head>
 
 <body class="grey lighten-3" style="overflow-x: hidden;">
@@ -419,7 +293,135 @@ window.gameData=JSON.parse(window.localStorage.gameData);
 
   </footer>
   <!--/.Footer-->
+
+<script src="https://gw.alipayobjects.com/os/antv/pkg/_antv.g6-3.0.5-beta.12/build/g6.js"></script>
+<script src="https://gw.alipayobjects.com/os/lib/dagre/0.8.4/dist/dagre.min.js"></script>
+<script type="text/javascript" src="js/jquery-3.4.1.min.js"></script>
+<script type="text/javascript" src="js/popper.min.js"></script>
+<script type="text/javascript" src="js/bootstrap.min.js"></script>
+<script type="text/javascript" src="js/mdb.js"></script>
 <script type="text/javascript" src="focus.js"></script>
+<script type="text/javascript" charset="utf-8">
+window.assets={
+    "party": [
+        {
+            "name": "理科主义"
+        }, {
+            "name": "文科主义"
+        },{
+            "name": "体育主义"
+        },{
+            "name": "综合主义"
+        }
+    ]
+}
+window.gameData=JSON.parse(window.localStorage.gameData);
+  window.getDescription = {
+      eduPoint:()=>{
+          $("#eduPointContainer").html('点数改变：<b class="f-green">+233.00</b>/回合<br/>基础值<b class="f-orange">2.00</b><br/>稳定度<b class="f-red">-20%</b>');
+      },
+      stability:()=>{
+          $("#stabilityContainer").html('<b class="f-orange">当前稳定度受到以下影响</b><br/>倾向学科支持率：<b class="f-green">+32%</b><br/>素质教育：<b class="f-green">+10%</b><br/><br/><b class="f-orange">当前稳定度影响以下内容</b><br/>学术支持率<b class="f-red">-30%</b><br/>学习速度<b class="f-green">+5%</b>');
+      },
+      studySupport:()=>{
+          $("#studySupportContainer").html('<b class="f-orange">当前支持率受到以下影响</b><br/>全校紧张度：<b class="f-green">+18%</b><br/>班级稳定度：<b class="f-red">-30%</b><br/>拥有学科荣耀：<b class="f-green">+5%</b><br/>激励（胡志敏）：<b class="f-green">+20%</b><br/><br/><b class="f-orange">当前支持率影响以下内容</b><br/>学习速度<b class="f-red">+8%</b>');
+      },
+      studyPoint:()=>{
+          $("#studyPointContainer").html('每回合学力增长:<b class="f-orange">+68</b><br/><br/>全部核心学生（<b class="f-orange">36</b>）学习<b class="f-orange">16</b>/回合<br/>全部非核心学生（<b class="f-orange">0</b>）学习<b class="f-orange">12</b>/回合<br/><br/>学习效率<b class="f-green">+20%</b><br/>学不死就往死里学：<b class="f-green">+25%</b><br/>素质教育：<b class="f-red">-5%</b><br/>稳定度：<b class="f-green">+5%</b><br/>');
+      },
+      schoolTension:()=>{
+          $("#schoolTensionContainer").html('最新的全校紧张度变化<br/><b class="f-orange">高三（4）班</b>：<b class="f-green">+4%</b><br/>切换学习政策：<b class="f-orange">学不死就往死里学</b>');
+      },
+      party:(e)=>{
+          var party=e.currentTarget.dataset.partyid;
+          
+          
+          $("#partyContainer").html('');
+      }
+  };
+  window.eventPop={
+      newsList:[],
+      nextNews:()=>{
+          $('#modalNews').modal('show');
+          let e=eventPop.newsList.shift();
+          if(e!=undefined){
+              document.getElementById("newsDetail").innerHTML=e.d;
+              document.getElementById("newsBtn").innerHTML=e.c;
+          }else{
+              $('#modalNews').modal('hide');
+          }
+      },
+      newsAdd:(detail,comment)=>{
+          eventPop.newsList.push({d:detail,c:comment});
+      },
+      eventList:[],
+      nextEvent:()=>{
+          
+      },
+      eventAdd:(detail,comment)=>{
+          eventPop.eventList.push({d:detail,c:comment});
+      }
+  }
+  $(document).ready(function(){
+    new WOW().init();
+    $('[data-toggle="popover"]').popover({html:true,trigger:'click'});
+    
+    $("#eduPoint").on("mouseover",function(e){
+        window.getDescription.eduPoint();
+    });
+    $("#stability").on("mouseover",function(e){
+        window.getDescription.stability();
+    });
+    $("#studySupport").on("mouseover",function(e){
+        window.getDescription.studySupport();
+    });
+    $("#studyPoint").on("mouseover",function(e){
+        window.getDescription.studyPoint();
+    });
+    $("#schoolTension").on("mouseover",function(e){
+        window.getDescription.schoolTension();
+    });
+    $("#party1,#party2,#party3,#party4").on("mouseover",function(e){
+        window.getDescription.party(e);
+    });
+    
+    var ctxP = document.getElementById("partySupport").getContext('2d');
+    var pieChart = new Chart(ctxP, {
+      type: 'pie',
+      data: {
+        labels: ["理科主义", "文科主义", "体育主义", "综合主义"],
+        datasets: [{
+          data: [32.02, 50.28, 10.2, 6.8],
+          backgroundColor: ["#4285f4", "#ff3547", "#fb3", "#00c851"],
+          hoverBackgroundColor: ["#7FA8EB", "#EF7680", "#F0C775", "#00FA64"]
+        }]
+      },
+      options: {
+        responsive: false,
+        aspectRatio: 1,
+        legend:{
+            display:false
+        },
+        layout: {
+            padding: {
+                right: 60
+            }
+        },
+        tooltips: {
+            callbacks: {
+                label: function(tooltipItem, data) {
+                    var label = data.labels[tooltipItem.index] + "(";
+                    label += data.datasets[0].data[tooltipItem.index];
+                    label += "%)"
+                    return label;
+                }
+            }
+        }
+      }
+    });
+  });
+  
+</script>
 </body>
 
 </html>
