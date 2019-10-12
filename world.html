@@ -166,7 +166,7 @@ window.gameData=JSON.parse(window.localStorage.gameData);
   </script>
 </head>
 
-<body class="grey lighten-3">
+<body class="grey lighten-3" style="overflow-x: hidden;">
 <div style="position:absolute;z-index:-999;width:100%;height:100%;" id="bg"></div>
   <header>
     <nav class="navbar fixed-top navbar-expand-lg navbar-light white scrolling-navbar">
@@ -240,6 +240,61 @@ window.gameData=JSON.parse(window.localStorage.gameData);
                 </div>
             </div>
           </div>
+          <div class="row">
+            <div class="card" style="width: 100%;">
+              <div class="card-body" style="padding: 4px;margin: 2px;width: 100%;">
+                  <div class="badge badge-primary text-wrap card-title" style="margin: 6px;letter-spacing: 0.25em;font-size: medium;">政策和班委</div>
+                <div class="card-text">
+                    <button type="button" class="btn btn-lg btn-outline-primary waves-effect" style="padding: 0;"><img src="http://temp.im/60x60" alt="" width="60" height="60" /></button>
+                    <button type="button" class="btn btn-lg btn-outline-primary waves-effect" style="padding: 0;"><img src="http://temp.im/60x60" alt="" width="60" height="60" /></button>
+                    <button type="button" class="btn btn-lg btn-outline-primary waves-effect" style="padding: 0;"><img src="http://temp.im/60x60" alt="" width="60" height="60" /></button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="card" style="width: 100%;">
+              <div class="card-body" style="padding: 4px;margin: 2px;width: 100%;">
+                  <div class="badge badge-primary text-wrap card-title" style="margin: 6px;letter-spacing: 0.25em;font-size: medium;">学习和资料</div>
+                <div class="card-text">
+                    <button type="button" class="btn btn-lg btn-outline-primary waves-effect" style="padding: 0;"><img src="http://temp.im/60x60" alt="" width="60" height="60" /></button>
+                    <button type="button" class="btn btn-lg btn-outline-primary waves-effect" style="padding: 0;"><img src="http://temp.im/60x60" alt="" width="60" height="60" /></button>
+                    <button type="button" class="btn btn-lg btn-outline-primary waves-effect" style="padding: 0;"><img src="http://temp.im/60x60" alt="" width="60" height="60" /></button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="card" style="width: 100%;">
+              <div class="card-body" style="padding: 4px;margin: 2px;width: 100%;">
+                  <div class="badge badge-primary text-wrap card-title" style="margin: 6px;letter-spacing: 0.25em;font-size: medium;">课代表</div>
+                <div class="card-text">
+                    <button type="button" class="btn btn-lg btn-outline-primary waves-effect" style="padding: 0;"><img src="http://temp.im/60x60" alt="" width="60" height="60" /></button>
+                    <button type="button" class="btn btn-lg btn-outline-primary waves-effect" style="padding: 0;"><img src="http://temp.im/60x60" alt="" width="60" height="60" /></button>
+                    <button type="button" class="btn btn-lg btn-outline-primary waves-effect" style="padding: 0;"><img src="http://temp.im/60x60" alt="" width="60" height="60" /></button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade left" id="decisionBar" tabindex="-1" role="dialog" aria-labelledby="decisionBar" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-full-height modal-left modal-notify modal-info" role="document" style="width:auto;max-width:620px;">
+    <div class="modal-content">
+      <div class="modal-header" style="padding: 6px;">
+        <p class="heading lead" style="font-size: x-large;">事件和决议</p>
+        <button type="button" class="close" style="padding: 0.3em;margin: 0.1em;" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true" class="white-text">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="container">
+
         </div>
 
       </div>
@@ -265,7 +320,7 @@ window.gameData=JSON.parse(window.localStorage.gameData);
   <div class="modal-dialog modal-xl" role="document" style="max-width: 100%;margin: 0;">
     <div class="modal-content" style="height:100%">
       <div class="modal-header">
-        <h4 class="modal-title w-100" id="modalFocus">策略</h4>
+        <h4 class="modal-title w-100" id="modalFocus">策略&emsp;<button type="button" class="btn btn-outline-primary waves-effect px-1" style="margin:0;padding: 4px;" onclick="refreshFocus()"><i class="fas fa-redo-alt"></i></button></h4>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -278,7 +333,7 @@ window.gameData=JSON.parse(window.localStorage.gameData);
 </div>
 
 <div class="modal fade right" id="modalFocusDetail" tabindex="-1" role="dialog" aria-labelledby="modalFocusDetail" aria-hidden="true" data-backdrop="false">
-  <div class="modal-dialog modal-side modal-bottom-right modal-notify modal-info" role="document">
+  <div class="modal-dialog modal-notify modal-info" role="document">
     <div class="modal-content">
       <div class="modal-header">
         <p class="heading" id="modalFocusDetailHead" style="padding: 0;">调整学习</p>
@@ -345,7 +400,7 @@ window.gameData=JSON.parse(window.localStorage.gameData);
         </div>
         <div class="card-body d-sm-flex">
             <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#sideBar" data-backdrop="false">信息</button>
-            <button type="button" class="btn btn-primary">决议</button>
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#decisionBar" data-backdrop="false">决议</button>
             <button type="button" class="btn btn-primary">将领</button>
         </div>
       </div>
