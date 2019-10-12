@@ -3067,8 +3067,9 @@ a.waves-effect, a.waves-light {
       padding-top: 0.38rem;
       padding-bottom: 0.38rem; }
 
-.btn-group .btn {
-  margin: 0; }
+.btn-group > .btn:not(:first-child),
+.btn-group > .btn-group:not(:first-child) {
+  margin-left: -0.375rem; }
 
 .btn .fa-lg,
 .btn-floating .fa-lg {
